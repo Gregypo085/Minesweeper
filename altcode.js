@@ -32,7 +32,7 @@ while (placed < MINES) {
 }
 
 // 3) For every non-mine cell, compute how many adjacent mines it touches
-//    We look at the 8 surrounding cells (N, NE, E, SE, S, SW, W, NW).
+// Look at the 8 surrounding cells (N, NE, E, SE, S, SW, W, NW).
 const directions = [
     [-1, -1], [-1, 0], [-1, 1],
     [0, -1],           [0, 1],

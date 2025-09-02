@@ -32,7 +32,7 @@ h1 {
     /* Grid Layout */
     display: grid;
     grid-template-columns: repeat(20, 1fr);
-    /* <-- 4x4 for now; change to 20 later */
+    /* <-- 20x20 grid */
     gap: 4px;
 }
 
