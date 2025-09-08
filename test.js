@@ -67,7 +67,7 @@ function renderGrid() {
                 row += ' .';
             } else {
                 const val = grid[r][c];
-                row += val === 0 ? '  ' : ` ${val}`;
+                row += val === 0 ? ' 0' : ` ${val}`;
             }
         }
         output += row + '\n';
@@ -83,7 +83,6 @@ const rl = readline.createInterface({
     output: process.stdout
 });
 
-// Main loop of the game. Every move restarts from this point
 function promptMove() {
     rl.question('Enter move (e.g. "3 5" or "flag 2 7". To unflag, simply reflag the same row and column. Ctrl + c to exit): ', handleInput);
 }
