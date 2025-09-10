@@ -67,7 +67,7 @@ function renderGrid() {
                 row += ' .';
             } else {
                 const val = grid[r][c];
-                row += val === 0 ? '  ' : ` ${val}`;
+                row += val === 0 ? ' |' : ` ${val}`;
             }
         }
         output += row + '\n';
@@ -83,9 +83,22 @@ const rl = readline.createInterface({
     output: process.stdout
 });
 
-// Main loop of the game. Every move restarts from this point
 function promptMove() {
     rl.question('Enter move (e.g. "3 5" or "flag 2 7". To unflag, simply reflag the same row and column. Ctrl + c to exit): ', handleInput);
+}
+
+// Uses direction to reveal connected 0s 
+function floodFill(row, col) {
+    if (!withinBounds(row, col)) return;
+    if (revealed[row][col] || flagged[row][col]) return;
+
+    revealed[row][col] = true;
+
+    if (grid[row][col] !== 0) return;
+
+    for (const [dr, dc] of directions) {
+        floodFill(row + dr, col + dc);
+    }
 }
 
 function handleInput(input) {
@@ -103,8 +116,11 @@ function handleInput(input) {
         const row = parseInt(parts[0]);
         const col = parseInt(parts[1]);
         if (withinBounds(row, col)) {
-            revealed[row][col] = true;
-        } else {
+            if (grid[row][col] === 0) {
+                floodFill(row, col);
+            } else {
+                revealed[row][col] = true;
+            }
             console.log('Invalid coordinates');
         }
     }

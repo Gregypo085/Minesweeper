@@ -4,6 +4,17 @@ const readline = require('readline');
 const SIZE = 10;
 const MINES = 3;
 
+// Win/Loss Conditions
+let gameOver = false;
+    if (gameOver) {
+        if (input === 'r') {
+            restartGame();
+        } else {
+            console.log('You get nothing. You lose. Good day sir');
+        }
+        return;
+    }
+
 // Create empty grids
 const grid = [];
 const revealed = [];
@@ -87,6 +98,19 @@ function promptMove() {
     rl.question('Enter move (e.g. "3 5" or "flag 2 7". To unflag, simply reflag the same row and column. Ctrl + c to exit): ', handleInput);
 }
 
+function floodFill(row, col) {
+    if (!withinBounds(row, col)) return;
+    if (revealed[row][col] || flagged[row][col]) return;
+
+    revealed[row][col] = true;
+
+    if (grid[row][col] !== 0) return;
+
+    for (const [dr, dc] of directions) {
+        floodFill(row + dr, col + dc);
+    }
+}
+
 function handleInput(input) {
     const parts = input.trim().split(/\s+/);
 
@@ -102,10 +126,16 @@ function handleInput(input) {
         const row = parseInt(parts[0]);
         const col = parseInt(parts[1]);
         if (withinBounds(row, col)) {
-            revealed[row][col] = true;
-        } else {
-            console.log('Invalid coordinates');
-        }
+            if (grid[row][col] === 0) {
+                floodFill(row, col);
+            } else {
+                revealed[row][col] = true;
+                if (grid[row][col] === 'X') {
+                    gameOver = true
+                }
+            }
+                console.log('Invalid coordinates');
+            }
     }
 
     renderGrid();
