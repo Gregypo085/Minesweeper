@@ -150,7 +150,7 @@ function handleInput(input) {
         if (input === 'r') {
             restartGame();
         } else {
-            console.log("Can't you read? Type 'r' to restart.");
+            console.log("Can't you read?");
             promptRestart();
         }
         return;

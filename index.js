@@ -131,6 +131,10 @@ function promptMove() {
     rl.question('Enter move (e.g. "3 5", "flag 2 7", or "r" to restart): ', handleInput);
 }
 
+function promptRestart() {
+    rl.question('Type "r" to restart', handleInput);
+}
+
 // Handle user input
 function handleInput(input) {
     input = input.trim().toLowerCase(); // Normalize input for comparison
@@ -146,8 +150,8 @@ function handleInput(input) {
         if (input === 'r') {
             restartGame();
         } else {
-            console.log("Can't you read? Type anything to restart.");
-            restartGame();
+            console.log("Can't you read?");
+            promptRestart();
         }
         return;
     }
@@ -173,8 +177,7 @@ function handleInput(input) {
                 gameOver = true;
                 renderGrid();
                 console.log("You get nothing. You lose. Good day sir!");
-                console.log("Hit return to restart");
-                promptMove();
+                promptRestart();
                 return;
             }
 
@@ -190,8 +193,7 @@ function handleInput(input) {
                 gameOver = true;
                 renderGrid();
                 console.log("You win!");
-                console.log("Hit return to restart");
-                promptMove();
+                promptRestart();
                 return;
             }
 
