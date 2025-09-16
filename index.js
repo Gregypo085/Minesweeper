@@ -216,3 +216,5 @@ function restartGame() {
 initialize();
 renderGrid();
 promptMove();
+
+// TODO: Check if version v22.19.0 is causing a compatibility issue
